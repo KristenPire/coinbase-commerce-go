@@ -37,12 +37,12 @@ func (a *APIClient) Checkouts() (checkouts APICheckouts, err error) {
 	return
 }
 
-func (a *APIClient) CreateCheckout(data APICheckoutData) (checkout APICheckout, err error) {
+func (a *APIClient) CreateCheckout(data interface{}) (checkout APICheckout, err error) {
 	err = a.Fetch("POST", "/checkouts/", data, &checkout)
 	return
 }
 
-func (a *APIClient) UpdateCheckout(id string, data APICheckoutData) (checkout APICheckout, err error) {
+func (a *APIClient) UpdateCheckout(id string, data interface{}) (checkout APICheckout, err error) {
 	err = a.Fetch("PUT", "/checkouts/"+id, data, &checkout)
 	return
 }

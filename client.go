@@ -41,11 +41,18 @@ func (a *APIClient) Fetch(method, path string, body interface{}, result interfac
 	client := &http.Client{}
 	var bodyBuffered io.Reader
 	if body != nil {
-		data, err := json.Marshal(body)
-		if err != nil {
-			return err
+		var data []byte
+		var err error
+		switch body.(type) {
+		case string:
+			data = []byte(body.(string))
+		default:
+			data, err = json.Marshal(body)
+			if err != nil {
+				return err
+			}
 		}
-		bodyBuffered = bytes.NewBuffer([]byte(data))
+		bodyBuffered = bytes.NewBuffer(data)
 	}
 	req, err := http.NewRequest(method, a.Endpoint+path, bodyBuffered)
 	if err != nil {

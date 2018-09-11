@@ -61,7 +61,7 @@ func (a *APIClient) Charges() (charges APICharges, err error) {
 	return
 }
 
-func (a *APIClient) CreateCharge(data APIChargeData) (charge APICharge, err error) {
+func (a *APIClient) CreateCharge(data interface{}) (charge APICharge, err error) {
 	err = a.Fetch("POST", "/charges/", data, &charge)
 	return
 }
