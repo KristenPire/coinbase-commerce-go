@@ -2,9 +2,8 @@ package coinbase
 
 import "time"
 
-
 type ACharge struct {
-  Api	*APIClient
+	Api *APIClient
 }
 
 type APIChargeData struct {
@@ -48,13 +47,13 @@ type APIChargeData struct {
 type APICharge struct {
 	father *ACharge
 	Data   APIChargeData `json:"data,omitempty"`
-	Errors []Error       `json:"errors,omitempty"`
+	Errors []APIError    `json:"errors,omitempty"`
 }
 
 type APICharges struct {
 	Pagination APIPagination   `json:"pagination,omitempty"`
 	Data       []APIChargeData `json:"data,omitempty"`
-	Errors     []Error         `json:"errors,omitempty"`
+	Errors     []APIError      `json:"errors,omitempty"`
 }
 
 func (a *ACharge) Get(id string) (charge APICharge, err error) {

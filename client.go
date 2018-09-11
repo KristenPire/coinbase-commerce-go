@@ -23,12 +23,12 @@ type APIClient struct {
 	Key        string
 	Endpoint   string
 	ApiVersion string
-	Checkout	 *ACheckout
-	Charge		 *ACharge
-	Event			 *AEvent
+	Checkout   *ACheckout
+	Charge     *ACharge
+	Event      *AEvent
 }
 
-func Client(api_key string) (client APIClient){
+func Client(api_key string) (client APIClient) {
 	client.Key = api_key
 	client.Checkout = new(ACheckout)
 	client.Checkout.Api = &client

@@ -3,7 +3,7 @@ package coinbase
 import "time"
 
 type AEvent struct {
-  Api	*APIClient
+	Api *APIClient
 }
 
 type APIEventData struct {
@@ -17,13 +17,13 @@ type APIEventData struct {
 type APIEvent struct {
 	father *AEvent
 	Data   APIEventData `json:"data,omitempty"`
-	Errors []Error      `json:"errors,omitempty"`
+	Errors []APIError   `json:"errors,omitempty"`
 }
 
 type APIEvents struct {
 	Pagination APIPagination  `json:"pagination,omitempty"`
 	Data       []APIEventData `json:"data,omitempty"`
-	Errors     []Error        `json:"errors,omitempty"`
+	Errors     []APIError     `json:"errors,omitempty"`
 }
 
 func (a *AEvent) Get(id string) (event APIEvent, err error) {

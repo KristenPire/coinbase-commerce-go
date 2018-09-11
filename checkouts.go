@@ -1,7 +1,7 @@
 package coinbase
 
 type ACheckout struct {
-  Api	*APIClient
+	Api *APIClient
 }
 
 type Money struct {
@@ -23,14 +23,14 @@ type APICheckoutData struct {
 type APICheckout struct {
 	father *ACheckout
 	Data   APICheckoutData `json:"data,omitempty"`
-	Errors []Error         `json:"errors,omitempty"`
+	Errors []APIError      `json:"errors,omitempty"`
 }
 
 type APICheckouts struct {
-	father *ACheckout
+	father     *ACheckout
 	Pagination APIPagination     `json:"pagination,omitempty"`
 	Data       []APICheckoutData `json:"data,omitempty"`
-	Errors     []Error           `json:"errors,omitempty"`
+	Errors     []APIError        `json:"errors,omitempty"`
 }
 
 func (a *ACheckout) Get(id string) (checkout APICheckout, err error) {
