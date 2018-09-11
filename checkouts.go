@@ -27,7 +27,12 @@ type APICheckout struct {
 }
 
 type APICheckouts struct {
-	father     *ACheckout
+	Pagination APIPagination `json:"pagination,omitempty"`
+	Checkouts  []APICheckout `json:"data,omitempty"`
+	Errors     []APIError    `json:"errors,omitempty"`
+}
+
+type APICheckoutsRequest struct {
 	Pagination APIPagination     `json:"pagination,omitempty"`
 	Data       []APICheckoutData `json:"data,omitempty"`
 	Errors     []APIError        `json:"errors,omitempty"`
@@ -40,8 +45,13 @@ func (a *ACheckout) Get(id string) (checkout APICheckout, err error) {
 }
 
 func (a *ACheckout) List() (checkouts APICheckouts, err error) {
-	err = a.Api.Fetch("GET", "/checkouts/", nil, &checkouts)
-	checkouts.father = a
+	temp := APICheckoutsRequest{}
+	err = a.Api.Fetch("GET", "/checkouts/", nil, &temp)
+	checkouts.Pagination = temp.Pagination
+	checkouts.Errors = temp.Errors
+	for _, data := range temp.Data {
+		checkouts.Checkouts = append(checkouts.Checkouts, APICheckout{father: a, Data: data, Errors: temp.Errors})
+	}
 	return
 }
 

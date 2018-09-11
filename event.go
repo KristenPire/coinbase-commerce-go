@@ -21,6 +21,12 @@ type APIEvent struct {
 }
 
 type APIEvents struct {
+	Pagination APIPagination `json:"pagination,omitempty"`
+	Events     []APIEvent    `json:"data,omitempty"`
+	Errors     []APIError    `json:"errors,omitempty"`
+}
+
+type APIEventsRequest struct {
 	Pagination APIPagination  `json:"pagination,omitempty"`
 	Data       []APIEventData `json:"data,omitempty"`
 	Errors     []APIError     `json:"errors,omitempty"`
@@ -38,6 +44,12 @@ func (a *APIEvent) Refresh() (err error) {
 }
 
 func (a *AEvent) List() (events APIEvents, err error) {
-	err = a.Api.Fetch("GET", "/events/", nil, &events)
+	temp := APIEventsRequest{}
+	err = a.Api.Fetch("GET", "/events/", nil, &temp)
+	events.Pagination = temp.Pagination
+	events.Errors = temp.Errors
+	for _, data := range temp.Data {
+		events.Events = append(events.Events, APIEvent{father: a, Data: data, Errors: temp.Errors})
+	}
 	return
 }

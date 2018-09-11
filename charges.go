@@ -51,6 +51,12 @@ type APICharge struct {
 }
 
 type APICharges struct {
+	Pagination APIPagination `json:"pagination,omitempty"`
+	Charges    []APICharge   `json:"data,omitempty"`
+	Errors     []APIError    `json:"errors,omitempty"`
+}
+
+type APIChargesRequest struct {
 	Pagination APIPagination   `json:"pagination,omitempty"`
 	Data       []APIChargeData `json:"data,omitempty"`
 	Errors     []APIError      `json:"errors,omitempty"`
@@ -68,7 +74,13 @@ func (a *APICharge) Refresh() (err error) {
 }
 
 func (a *ACharge) List() (charges APICharges, err error) {
-	err = a.Api.Fetch("GET", "/charges/", nil, &charges)
+	temp := APIChargesRequest{}
+	err = a.Api.Fetch("GET", "/charges/", nil, &temp)
+	charges.Pagination = temp.Pagination
+	charges.Errors = temp.Errors
+	for _, data := range temp.Data {
+		charges.Charges = append(charges.Charges, APICharge{father: a, Data: data, Errors: temp.Errors})
+	}
 	return
 }
 
