@@ -46,6 +46,7 @@ type APIChargeData struct {
 }
 
 type APICharge struct {
+	father *ACharge
 	Data   APIChargeData `json:"data,omitempty"`
 	Errors []Error       `json:"errors,omitempty"`
 }
@@ -58,6 +59,12 @@ type APICharges struct {
 
 func (a *ACharge) Get(id string) (charge APICharge, err error) {
 	err = a.Api.Fetch("GET", "/charges/"+id, nil, &charge)
+	charge.father = a
+	return
+}
+
+func (a *APICharge) Refresh() (err error) {
+	err = a.father.Api.Fetch("GET", "/charges/"+a.Data.Id, nil, &a.Data)
 	return
 }
 
@@ -68,5 +75,6 @@ func (a *ACharge) List() (charges APICharges, err error) {
 
 func (a *ACharge) Create(data interface{}) (charge APICharge, err error) {
 	err = a.Api.Fetch("POST", "/charges/", data, &charge)
+	charge.father = a
 	return
 }

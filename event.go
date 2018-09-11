@@ -15,6 +15,7 @@ type APIEventData struct {
 }
 
 type APIEvent struct {
+	father *AEvent
 	Data   APIEventData `json:"data,omitempty"`
 	Errors []Error      `json:"errors,omitempty"`
 }
@@ -25,12 +26,18 @@ type APIEvents struct {
 	Errors     []Error        `json:"errors,omitempty"`
 }
 
-func (a *APIClient) Event(id string) (event APIEvent, err error) {
-	err = a.Fetch("GET", "/events/"+id, nil, &event)
+func (a *AEvent) Get(id string) (event APIEvent, err error) {
+	err = a.Api.Fetch("GET", "/events/"+id, nil, &event)
+	event.father = a
 	return
 }
 
-func (a *APIClient) Events() (events APIEvents, err error) {
-	err = a.Fetch("GET", "/events/", nil, &events)
+func (a *APIEvent) Refresh() (err error) {
+	err = a.father.Api.Fetch("GET", "/events/"+a.Data.Id, nil, a)
+	return
+}
+
+func (a *AEvent) List() (events APIEvents, err error) {
+	err = a.Api.Fetch("GET", "/events/", nil, &events)
 	return
 }

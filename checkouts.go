@@ -63,6 +63,11 @@ func (a *ACheckout) Delete(id string) (checkout APICheckout, err error) {
 	return
 }
 
+func (a *APICheckout) Refresh() (err error) {
+	err = a.father.Api.Fetch("GET", "/checkouts/"+a.Data.Id, nil, a.Data)
+	return
+}
+
 func (a *APICheckout) Save() (err error) {
 	err = a.father.Api.Fetch("PUT", "/checkouts/"+a.Data.Id, a.Data, a)
 	return

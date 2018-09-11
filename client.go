@@ -25,6 +25,7 @@ type APIClient struct {
 	ApiVersion string
 	Checkout	 *ACheckout
 	Charge		 *ACharge
+	Event			 *AEvent
 }
 
 func Client(api_key string) (client APIClient){
@@ -33,6 +34,8 @@ func Client(api_key string) (client APIClient){
 	client.Checkout.Api = &client
 	client.Charge = new(ACharge)
 	client.Charge.Api = &client
+	client.Event = new(AEvent)
+	client.Event.Api = &client
 
 	return
 }
