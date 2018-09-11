@@ -94,15 +94,15 @@ checkout, err := client.Checkout.Create(coinbase.APICheckoutData{
     Name:"The Sovereign Individual",
     Description: "Mastering the Transition to the Information Age",
     Pricing_type: "fixed_price",
-    Local_Price: coinbase.Money{Amount : 100.00, Currency: "USD"},
+    Local_price: coinbase.Money{Amount : 100.00, Currency: "USD"},
     Requested_info: []string{"email", "name"},
    })
 
 #or directly by json
 checkout_info = `{
-    "name": 'The Sovereign Individual',
-    "description": 'Mastering the Transition to the Information Age',
-    "pricing_type": 'fixed_price',
+    "name": "The Sovereign Individual",
+    "description": "Mastering the Transition to the Information Age",
+    "pricing_type": "fixed_price",
     "local_price": {
         "amount": "100.00",
         "currency": "USD"
@@ -112,125 +112,100 @@ checkout_info = `{
 checkout, err = client.Checkout.Create(checkout_info)
 ```
 ### Update
-```python
-checkout = client.checkout.retrieve(<checkout_id>)
-checkout.name = 'new name'
-checkout.save()
+```golang
+#by object method
+checkout = client.Checkout.Get(<checkout_id>)
+checkout.Data.Name = "new name"
+checkout.Save()
 
-# or
+#by API method and json
+checkout_info = `{"name": "newName"}`
 
-checkout = client.checkout.modify('<checkout_id>',
-                                  name='new name')
+checkout = client.Checkout.Update('<checkout_id>', checkout_info)
+
+#or by API method and object
+checkout = coinbase.APICheckoutData{}
+checkout.Name = "new name"
+
+checkout = client.Checkout.Update('<checkout_id>', checkout)
 ```
+
 ### Delete
-```python
-checkout.delete()
+```golang
+#by object method
+checkout = client.Checkout.Get(<checkout_id>)
+checkout.Delete()
+
+#by API method
+client.Checkout.Delete('<checkout_id>')
 ```
 ### List
-```python
-checkouts = client.checkout.list()
+```golang
+checkouts = client.Checkout.List()
 ```
-### Paging list iterations
-```python
-for checkout in client.checkout.list_paging_iter():
-    print("{!r}".format(checkout))
 
+### Iterations
+```golang
+checkouts = client.Checkout.List()
+for _, checkout := range checkouts.Data{
+    checkout.Delete()
+}
 ```
 ## Charges
 [Charges API docs](https://commerce.coinbase.com/docs/api/#charges)
 ### Retrieve
-```python
-charge = client.charge.retrieve(<charge_id>)
+```golang
+charge := client.Charge.Get(<charge_id>)
 ```
 ### Create
-```python
-charge_info = {
+```golang
+#by struct
+charge, err := client.Charge.Create(coinbase.APIChargeData{
+    Name:"The Sovereign Individual",
+    Description: "Mastering the Transition to the Information Age",
+    Pricing_type: "fixed_price",
+    Local_price: coinbase.Money{Amount : 100.00, Currency: "USD"},
+   })
+
+#or directly by json
+charge_info := `{
     "name": "The Sovereign Individual",
     "description": "Mastering the Transition to the Information Age",
+    "pricing_type": "fixed_price",
     "local_price": {
         "amount": "100.00",
-        "currency": "USD"
-    },
-    "pricing_type": "fixed_price"
-
-}
-charge = client.charge.create(**charge_info)
-
-# or
-
-charge = client.charge.create(name='The Sovereign Individual',
-                              description='Mastering the Transition to the Information Age',
-                              pricing_type='fixed_price',
-                              local_price={
-                                  "amount": "100.00",
-                                  "currency": "USD"
-                              })
+        "currency": "USD"title
+    }
+}`
+charge, err := client.Charge.Create(charge_info)
 ```
 ### List
-```python
-checkouts = client.charge.list()
+```golang
+charges := client.Charge.List()
 ```
-### Paging list iterations
-```python
-for charge in client.charge.list_paging_iter():
-    print("{!r}".format(charge))
+### Iterations
+```golang
+charges = client.Charge.List()
+for _, charge := range charges.Data{
+    jsonStr, _ := json.Marshal(charge)
+    fmt.Println(string(jsonStr))
+}
 ```
 ## Events
 [Events API Docs](https://commerce.coinbase.com/docs/api/#events)
 ### Retrieve
-```python
-event = client.event.retrieve(<event_id>)
+```golang
+event := client.Event.Get(<event_id>)
 ```
 ### List
-```python
-events = client.event.list()
+```golang
+events = client.Event.List()
 ```
-### Paging list iterations
-```python
-for event in client.event.list_paging_iter():
-    print("{!r}".format(event))
-```
-
-## Validating webhook signatures
-You could verify webhook signatures using our library.
-To perform the verification you'll need to provide the event data, a webhook signature from request header, and the endpoint’s secret.
-In case of invalid request signature or request payload, you will receive appropriate error message.
-```python
-WEBHOOK_SECRET = 'your_webhook_secret'
-
-# using Flask
-@app.route('/webhooks', methods=['POST'])
-def webhooks():
-    # event payload
-    request_data = request.data.decode('utf-8')
-    # webhook signature
-    request_sig = request.headers.get('X-CC-Webhook-Signature', None)
-
-    try:
-        # signature verification and event object construction
-        event = Webhook.construct_event(request_data, request_sig, WEBHOOK_SECRET)
-    except (WebhookInvalidPayload, SignatureVerificationError) as e:
-        return str(e), 400
-
-    print("Received event: id={id}, type={type}".format(id=event.id, type=event.type))
-    return 'success', 200
-```
-
-### Testing and Contributing
-Any and all contributions are welcome! The process is simple: fork this repo, make your changes, run the test suite, and submit a pull request. Tests are run via nosetest. To run the tests, clone the repository and then:
-
-#### Install the requirements
-```
-pip install -r requirements.txt
-```
-
-####  Run the tests for your current version of Python
-Use tox to run the test suite against multiple versions of Python. You can install tox with pip or easy_install:
-```
-pip install tox
-easy_install tox
-```
-Tox requires the appropriate Python interpreters to run the tests in different environments. We recommend using pyenv for this. Once you've installed the appropriate interpreters, running the tests in every environment is simple:
-```
-tox
+### Iterations
+```golang
+events = client.Event.List()
+for _, event := range events.Data{
+    jsonStr, _ := json.Marshal(event)
+    fmt.Println(string(jsonStr))
+}
 ```
