@@ -27,9 +27,8 @@ type APIClient struct {
 	Charge		 *ACharge
 }
 
-func Client(key string) (client APIClient){
-	//client = new(APIClient)
-	client.Key = key
+func Client(api_key string) (client APIClient){
+	client.Key = api_key
 	client.Checkout = new(ACheckout)
 	client.Checkout.Api = &client
 	client.Charge = new(ACharge)
