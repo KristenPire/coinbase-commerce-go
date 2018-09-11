@@ -47,11 +47,11 @@ checkout.Save()
 checkout.Delete()
 ```
 
-Each API method returns an ``APIObject`` (an Interface for ``APICharge, APICheckout, APIEvent``) representing the response from the API, all of the models are dumpable with JSON.\
-Also when the response data is parsed into Golang objects, the appropriate ``APIObject`` subclasses will be used automatically.
+Each API method returns an ``API ressource instances`` (``APICharge, APICheckout, APIEvent``) representing the response from the API, all of the models are dumpable with JSON.\
+The response data is parsed into Golang objects, the appropriate ``APIObject`` subclasses will be used automatically.
 
 Client support Common API Errors and Warnings handling.
-All errors occuring during interaction with the API will be raised as exceptions.
+All errors occuring during interaction with the API will be return.
 
 
 | Error                    | Status Code |
