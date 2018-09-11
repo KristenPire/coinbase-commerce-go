@@ -97,7 +97,7 @@ checkout, err := client.Checkout.Create(coinbase.APICheckoutData{
    })
 
 #or directly by json
-checkout_info = `{
+checkout_info := `{
     "name": "The Sovereign Individual",
     "description": "Mastering the Transition to the Information Age",
     "pricing_type": "fixed_price",
@@ -107,31 +107,31 @@ checkout_info = `{
     },
     "requested_info": ["name", "email"]
 }`
-checkout, err = client.Checkout.Create(checkout_info)
+checkout, err := client.Checkout.Create(checkout_info)
 ```
 ### Update
 ```golang
 #by object method
-checkout = client.Checkout.Get(<checkout_id>)
-checkout.Data.Name = "new name"
+checkout := client.Checkout.Get(<checkout_id>)
+checkout.Data.Name := "new name"
 checkout.Save()
 
 #by API method and json
-checkout_info = `{"name": "newName"}`
+checkout_info := `{"name": "newName"}`
 
-checkout = client.Checkout.Update('<checkout_id>', checkout_info)
+checkout := client.Checkout.Update('<checkout_id>', checkout_info)
 
 #or by API method and object
-checkout = coinbase.APICheckoutData{}
-checkout.Name = "new name"
+checkout := coinbase.APICheckoutData{}
+checkout.Name := "new name"
 
-checkout = client.Checkout.Update('<checkout_id>', checkout)
+checkout := client.Checkout.Update('<checkout_id>', checkout)
 ```
 
 ### Delete
 ```golang
 #by object method
-checkout = client.Checkout.Get(<checkout_id>)
+checkout := client.Checkout.Get(<checkout_id>)
 checkout.Delete()
 
 #by API method
@@ -139,12 +139,12 @@ client.Checkout.Delete('<checkout_id>')
 ```
 ### List
 ```golang
-checkouts = client.Checkout.List()
+checkouts := client.Checkout.List()
 ```
 
 ### Iterations
 ```golang
-checkouts = client.Checkout.List()
+checkouts := client.Checkout.List()
 for _, checkout := range checkouts.Data{
     checkout.Delete()
 }
@@ -183,7 +183,7 @@ charges := client.Charge.List()
 ```
 ### Iterations
 ```golang
-charges = client.Charge.List()
+charges := client.Charge.List()
 for _, charge := range charges.Data{
     jsonStr, _ := json.Marshal(charge)
     fmt.Println(string(jsonStr))
@@ -197,11 +197,11 @@ event := client.Event.Get(<event_id>)
 ```
 ### List
 ```golang
-events = client.Event.List()
+events := client.Event.List()
 ```
 ### Iterations
 ```golang
-events = client.Event.List()
+events := client.Event.List()
 for _, event := range events.Data{
     jsonStr, _ := json.Marshal(event)
     fmt.Println(string(jsonStr))
