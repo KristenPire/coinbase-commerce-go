@@ -10,8 +10,6 @@ Coinbase Commerce Golang
       * [Checkouts](#checkouts)
       * [Charges](#charges)
       * [Events](#events)
-   * [Validating webhook signatures](#validating-webhook-signatures)
-   * [Testing and Contributing](#testing-and-contributing)
 <!--te-->
 
 
