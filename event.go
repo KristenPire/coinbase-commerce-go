@@ -2,6 +2,10 @@ package coinbase
 
 import "time"
 
+type AEvent struct {
+  Api	*APIClient
+}
+
 type APIEventData struct {
 	Id          string        `json:"id,omitempty"`
 	Resource    string        `json:"ressource,omitempty"`

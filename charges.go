@@ -2,6 +2,11 @@ package coinbase
 
 import "time"
 
+
+type ACharge struct {
+  Api	*APIClient
+}
+
 type APIChargeData struct {
 	Id           string     `json:"id,omitempty"`
 	Resource     string     `json:"ressource,omitempty"`
@@ -51,17 +56,17 @@ type APICharges struct {
 	Errors     []Error         `json:"errors,omitempty"`
 }
 
-func (a *APIClient) Charge(id string) (charge APICharge, err error) {
-	err = a.Fetch("GET", "/charges/"+id, nil, &charge)
+func (a *ACharge) Get(id string) (charge APICharge, err error) {
+	err = a.Api.Fetch("GET", "/charges/"+id, nil, &charge)
 	return
 }
 
-func (a *APIClient) Charges() (charges APICharges, err error) {
-	err = a.Fetch("GET", "/charges/", nil, &charges)
+func (a *ACharge) List() (charges APICharges, err error) {
+	err = a.Api.Fetch("GET", "/charges/", nil, &charges)
 	return
 }
 
-func (a *APIClient) CreateCharge(data interface{}) (charge APICharge, err error) {
-	err = a.Fetch("POST", "/charges/", data, &charge)
+func (a *ACharge) Create(data interface{}) (charge APICharge, err error) {
+	err = a.Api.Fetch("POST", "/charges/", data, &charge)
 	return
 }

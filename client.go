@@ -23,6 +23,19 @@ type APIClient struct {
 	Key        string
 	Endpoint   string
 	ApiVersion string
+	Checkout	 *ACheckout
+	Charge		 *ACharge
+}
+
+func Client(key string) (client APIClient){
+	//client = new(APIClient)
+	client.Key = key
+	client.Checkout = new(ACheckout)
+	client.Checkout.Api = &client
+	client.Charge = new(ACharge)
+	client.Charge.Api = &client
+
+	return
 }
 
 // Fetch works as a wrapper for all kind of http requests. It requires a http method

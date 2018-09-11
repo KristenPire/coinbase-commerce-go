@@ -1,5 +1,9 @@
 package coinbase
 
+type ACheckout struct {
+  Api	*APIClient
+}
+
 type Money struct {
 	Amount   float64 `json:"amount,string,omitempty"`
 	Currency string  `json:"currency,omitempty"`
@@ -17,37 +21,54 @@ type APICheckoutData struct {
 }
 
 type APICheckout struct {
+	father *ACheckout
 	Data   APICheckoutData `json:"data,omitempty"`
 	Errors []Error         `json:"errors,omitempty"`
 }
 
 type APICheckouts struct {
+	father *ACheckout
 	Pagination APIPagination     `json:"pagination,omitempty"`
 	Data       []APICheckoutData `json:"data,omitempty"`
 	Errors     []Error           `json:"errors,omitempty"`
 }
 
-func (a *APIClient) Checkout(id string) (checkout APICheckout, err error) {
-	err = a.Fetch("GET", "/checkouts/"+id, nil, &checkout)
+func (a *ACheckout) Get(id string) (checkout APICheckout, err error) {
+	err = a.Api.Fetch("GET", "/checkouts/"+id, nil, &checkout)
+	checkout.father = a
 	return
 }
 
-func (a *APIClient) Checkouts() (checkouts APICheckouts, err error) {
-	err = a.Fetch("GET", "/checkouts/", nil, &checkouts)
+func (a *ACheckout) List() (checkouts APICheckouts, err error) {
+	err = a.Api.Fetch("GET", "/checkouts/", nil, &checkouts)
+	checkouts.father = a
 	return
 }
 
-func (a *APIClient) CreateCheckout(data interface{}) (checkout APICheckout, err error) {
-	err = a.Fetch("POST", "/checkouts/", data, &checkout)
+func (a *ACheckout) Create(data interface{}) (checkout APICheckout, err error) {
+	err = a.Api.Fetch("POST", "/checkouts/", data, &checkout)
+	checkout.father = a
 	return
 }
 
-func (a *APIClient) UpdateCheckout(id string, data interface{}) (checkout APICheckout, err error) {
-	err = a.Fetch("PUT", "/checkouts/"+id, data, &checkout)
+func (a *ACheckout) Update(id string, data interface{}) (checkout APICheckout, err error) {
+	err = a.Api.Fetch("PUT", "/checkouts/"+id, data, &checkout)
+	checkout.father = a
 	return
 }
 
-func (a *APIClient) DeleteCheckout(id string) (checkout APICheckout, err error) {
-	err = a.Fetch("DELETE", "/checkouts/"+id, nil, &checkout)
+func (a *ACheckout) Delete(id string) (checkout APICheckout, err error) {
+	err = a.Api.Fetch("DELETE", "/checkouts/"+id, nil, &checkout)
+	checkout.father = a
+	return
+}
+
+func (a *APICheckout) Save() (err error) {
+	err = a.father.Api.Fetch("PUT", "/checkouts/"+a.Data.Id, a.Data, a)
+	return
+}
+
+func (a *APICheckout) Delete() (err error) {
+	err = a.father.Api.Fetch("DELETE", "/checkouts/"+a.Data.Id, nil, a)
 	return
 }
