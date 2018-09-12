@@ -8,7 +8,7 @@ type ACharge struct {
 
 type APIChargeData struct {
 	Id           string     `json:"id,omitempty"`
-	Resource     string     `json:"ressource,omitempty"`
+	Ressource     string     `json:"ressource,omitempty"`
 	Code         string     `json:"code,omitempty"`
 	Name         string     `json:"name,omitempty"`
 	Description  string     `json:"description,omitempty"`
@@ -34,7 +34,7 @@ type APIChargeData struct {
 		Ethereum    Money `json:"ethereum,omitempty"`
 		Litecoin    Money `json:"litecoin,omitempty"`
 	} `json:"pricing,omitempty"`
-	Payements []map[string]interface{} `json:"payements,omitempty"`
+	Payments []map[string]interface{} `json:"payments,omitempty"`
 	Addresses struct {
 		Bitcoin     string `json:"bitcoin,omitempty"`
 		Bitcoincash string `json:"bitcoincash,omitempty"`
