@@ -15,7 +15,7 @@ Coinbase Commerce Golang
 
 ## Documentation
 
-For more details visit [Coinbase API docs](https://commerce.coinbase.com/docs/api/).
+For more details visit [Coinbase API docs](https://commerce.coinbase.com/docs/api/) and [Coinbase Commerce Go GoDoc](https://godoc.org/github.com/KristenPire/coinbase-commerce-go)
 
 To start using library, you need to register on [Commerce SignUp](https://commerce.coinbase.com/signup).
 And get your ``API_KEY`` from user settings.
@@ -41,7 +41,7 @@ client.Checkout.Delete
 ```
 as well as ``Save, Delete, Refresh`` methods from API resource class instances.
 ```golang
-checkout := client.Checkout.Get(<id>)
+checkout, err := client.Checkout.Get(<id>)
 checkout.Refresh()
 checkout.Save()
 checkout.Delete()
@@ -83,7 +83,7 @@ client := coinbase.Client(API_KEY)
 [Checkouts API docs](https://commerce.coinbase.com/docs/api/#checkouts)
 ### Get
 ```golang
-checkout := client.Checkout.Get(<checkout_id>)
+checkout, err := client.Checkout.Get(<checkout_id>)
 ```
 ### Create
 ```golang
@@ -112,26 +112,26 @@ checkout, err := client.Checkout.Create(checkout_info)
 ### Update
 ```golang
 #by object method
-checkout := client.Checkout.Get(<checkout_id>)
+checkout, err := client.Checkout.Get(<checkout_id>)
 checkout.Data.Name := "new name"
 checkout.Save()
 
 #by API method and json
 checkout_info := `{"name": "newName"}`
 
-checkout := client.Checkout.Update('<checkout_id>', checkout_info)
+checkout, err := client.Checkout.Update('<checkout_id>', checkout_info)
 
 #or by API method and object
 checkout := coinbase.APICheckoutData{}
 checkout.Name := "new name"
 
-checkout := client.Checkout.Update('<checkout_id>', checkout)
+checkout, err := client.Checkout.Update('<checkout_id>', checkout)
 ```
 
 ### Delete
 ```golang
 #by object method
-checkout := client.Checkout.Get(<checkout_id>)
+checkout , err := client.Checkout.Get(<checkout_id>)
 checkout.Delete()
 
 #by API method
@@ -139,13 +139,13 @@ client.Checkout.Delete('<checkout_id>')
 ```
 ### List
 ```golang
-checkouts := client.Checkout.List()
+checkouts, err := client.Checkout.List()
 ```
 
 ### Iterations
 ```golang
-checkouts := client.Checkout.List()
-for _, checkout := range checkouts.Data{
+checkouts, err := client.Checkout.List()
+for err, checkout := range checkouts.Data{
     checkout.Delete()
 }
 ```
@@ -153,7 +153,7 @@ for _, checkout := range checkouts.Data{
 [Charges API docs](https://commerce.coinbase.com/docs/api/#charges)
 ### Retrieve
 ```golang
-charge := client.Charge.Get(<charge_id>)
+charge ,err := client.Charge.Get(<charge_id>)
 ```
 ### Create
 ```golang
@@ -179,11 +179,11 @@ charge, err := client.Charge.Create(charge_info)
 ```
 ### List
 ```golang
-charges := client.Charge.List()
+charges, err := client.Charge.List()
 ```
 ### Iterations
 ```golang
-charges := client.Charge.List()
+charges, err := client.Charge.List()
 for _, charge := range charges.Data{
     jsonStr, _ := json.Marshal(charge)
     fmt.Println(string(jsonStr))
@@ -193,15 +193,15 @@ for _, charge := range charges.Data{
 [Events API Docs](https://commerce.coinbase.com/docs/api/#events)
 ### Retrieve
 ```golang
-event := client.Event.Get(<event_id>)
+event ,err := client.Event.Get(<event_id>)
 ```
 ### List
 ```golang
-events := client.Event.List()
+events, err := client.Event.List()
 ```
 ### Iterations
 ```golang
-events := client.Event.List()
+events, err := client.Event.List()
 for _, event := range events.Data{
     jsonStr, _ := json.Marshal(event)
     fmt.Println(string(jsonStr))
