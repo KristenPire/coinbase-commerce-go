@@ -38,12 +38,17 @@ type APICheckoutsRequest struct {
 	Errors     []APIError        `json:"errors,omitempty"`
 }
 
+
+
+// Get provides the APICharge instance of the given charge id.
 func (a *ACheckout) Get(id string) (checkout APICheckout, err error) {
 	err = a.Api.Fetch("GET", "/checkouts/"+id, nil, &checkout)
 	checkout.father = a
 	return
 }
 
+
+// List create a APICharges object with a list of APICharge instance.
 func (a *ACheckout) List() (checkouts APICheckouts, err error) {
 	temp := APICheckoutsRequest{}
 	err = a.Api.Fetch("GET", "/checkouts/", nil, &temp)
@@ -55,34 +60,38 @@ func (a *ACheckout) List() (checkouts APICheckouts, err error) {
 	return
 }
 
+// Create a new charge and return his golang instance
 func (a *ACheckout) Create(data interface{}) (checkout APICheckout, err error) {
 	err = a.Api.Fetch("POST", "/checkouts/", data, &checkout)
 	checkout.father = a
 	return
 }
 
+// Update will changes the given field of the id given checkout
 func (a *ACheckout) Update(id string, data interface{}) (checkout APICheckout, err error) {
 	err = a.Api.Fetch("PUT", "/checkouts/"+id, data, &checkout)
 	checkout.father = a
 	return
 }
-
-func (a *ACheckout) Delete(id string) (checkout APICheckout, err error) {
-	err = a.Api.Fetch("DELETE", "/checkouts/"+id, nil, &checkout)
-	checkout.father = a
+// Delete will erase the id given checkout
+func (a *ACheckout) Delete(id string) (err error) {
+	err = a.Api.Fetch("DELETE", "/checkouts/"+id, nil, nil)
 	return
 }
 
+// Refresh will update attributes and all nested data by making a fresh GET request to the relevant API endpoint.
 func (a *APICheckout) Refresh() (err error) {
 	err = a.father.Api.Fetch("GET", "/checkouts/"+a.Data.Id, nil, a.Data)
 	return
 }
 
+//  Save is the object method equivalent of update.
 func (a *APICheckout) Save() (err error) {
 	err = a.father.Api.Fetch("PUT", "/checkouts/"+a.Data.Id, a.Data, a)
 	return
 }
 
+// Delete the checkout
 func (a *APICheckout) Delete() (err error) {
 	err = a.father.Api.Fetch("DELETE", "/checkouts/"+a.Data.Id, nil, a)
 	return
