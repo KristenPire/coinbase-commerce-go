@@ -15,7 +15,7 @@ Coinbase Commerce Golang
 
 ## Documentation
 
-For more details visit [Coinbase API docs](https://commerce.coinbase.com/docs/api/).
+For more details visit [Coinbase API docs](https://commerce.coinbase.com/docs/api/). and [GoDoc](https://godoc.org/github.com/KristenPire/coinbase-commerce-go)
 
 To start using library, you need to register on [Commerce SignUp](https://commerce.coinbase.com/signup).
 And get your ``API_KEY`` from user settings.
