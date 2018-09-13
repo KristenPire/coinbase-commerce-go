@@ -41,7 +41,7 @@ client.Checkout.Delete
 ```
 as well as ``Save, Delete, Refresh`` methods from API resource class instances.
 ```golang
-checkout := client.Checkout.Get(<id>)
+checkout, err := client.Checkout.Get(<id>)
 checkout.Refresh()
 checkout.Save()
 checkout.Delete()
@@ -83,7 +83,7 @@ client := coinbase.Client(API_KEY)
 [Checkouts API docs](https://commerce.coinbase.com/docs/api/#checkouts)
 ### Get
 ```golang
-checkout := client.Checkout.Get(<checkout_id>)
+checkout, err := client.Checkout.Get(<checkout_id>)
 ```
 ### Create
 ```golang
@@ -112,26 +112,26 @@ checkout, err := client.Checkout.Create(checkout_info)
 ### Update
 ```golang
 #by object method
-checkout := client.Checkout.Get(<checkout_id>)
+checkout, err := client.Checkout.Get(<checkout_id>)
 checkout.Data.Name := "new name"
 checkout.Save()
 
 #by API method and json
 checkout_info := `{"name": "newName"}`
 
-checkout := client.Checkout.Update('<checkout_id>', checkout_info)
+checkout, err := client.Checkout.Update('<checkout_id>', checkout_info)
 
 #or by API method and object
 checkout := coinbase.APICheckoutData{}
 checkout.Name := "new name"
 
-checkout := client.Checkout.Update('<checkout_id>', checkout)
+checkout, err := client.Checkout.Update('<checkout_id>', checkout)
 ```
 
 ### Delete
 ```golang
 #by object method
-checkout := client.Checkout.Get(<checkout_id>)
+checkout , err := client.Checkout.Get(<checkout_id>)
 checkout.Delete()
 
 #by API method
@@ -153,7 +153,7 @@ for err, checkout := range checkouts.Data{
 [Charges API docs](https://commerce.coinbase.com/docs/api/#charges)
 ### Retrieve
 ```golang
-charge := client.Charge.Get(<charge_id>)
+charge ,err := client.Charge.Get(<charge_id>)
 ```
 ### Create
 ```golang
@@ -193,7 +193,7 @@ for _, charge := range charges.Data{
 [Events API Docs](https://commerce.coinbase.com/docs/api/#events)
 ### Retrieve
 ```golang
-event := client.Event.Get(<event_id>)
+event ,err := client.Event.Get(<event_id>)
 ```
 ### List
 ```golang
