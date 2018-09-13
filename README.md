@@ -139,13 +139,13 @@ client.Checkout.Delete('<checkout_id>')
 ```
 ### List
 ```golang
-checkouts := client.Checkout.List()
+checkouts, err := client.Checkout.List()
 ```
 
 ### Iterations
 ```golang
-checkouts := client.Checkout.List()
-for _, checkout := range checkouts.Data{
+checkouts, err := client.Checkout.List()
+for err, checkout := range checkouts.Data{
     checkout.Delete()
 }
 ```
@@ -179,11 +179,11 @@ charge, err := client.Charge.Create(charge_info)
 ```
 ### List
 ```golang
-charges := client.Charge.List()
+charges, err := client.Charge.List()
 ```
 ### Iterations
 ```golang
-charges := client.Charge.List()
+charges, err := client.Charge.List()
 for _, charge := range charges.Data{
     jsonStr, _ := json.Marshal(charge)
     fmt.Println(string(jsonStr))
@@ -197,11 +197,11 @@ event := client.Event.Get(<event_id>)
 ```
 ### List
 ```golang
-events := client.Event.List()
+events, err := client.Event.List()
 ```
 ### Iterations
 ```golang
-events := client.Event.List()
+events, err := client.Event.List()
 for _, event := range events.Data{
     jsonStr, _ := json.Marshal(event)
     fmt.Println(string(jsonStr))
