@@ -172,7 +172,7 @@ charge_info := `{
     "pricing_type": "fixed_price",
     "local_price": {
         "amount": "100.00",
-        "currency": "USD"title
+        "currency": "USD"
     }
 }`
 charge, err := client.Charge.Create(charge_info)
