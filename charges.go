@@ -35,7 +35,27 @@ type APIChargeData struct {
 		Ethereum    Money `json:"ethereum,omitempty"`
 		Litecoin    Money `json:"litecoin,omitempty"`
 	} `json:"pricing,omitempty"`
-	Payments []map[string]interface{} `json:"payments,omitempty"`
+	Payments []struct {
+		Network string`json:"network,omitepty"`
+		Transaction_id string `json:"transaction_id,omitepty"`
+		Status string `json:"status,omitepty"`
+		Value struct {
+			Local struct {
+				Amount string `json:"amount,omitepty"`
+				Currency string `json:"currency,omitepty"`
+			}
+			Crypto struct {
+				Amount string `json:"amount,omitepty"`
+				Currency string `json:"currency,omitepty"`
+			}`json:"crypto,omitepty"`
+		} `json:"value,omitepty"`
+		Block struct {
+			Height int `json:"height,omitepty"`
+			Hash string `json:"hash,omitepty"`
+			Confirmations_accumulated int `json:"confirmations_accumulated ,omitepty"`
+			Confirmations_required int `json:"confirmations_required,omitepty"`
+		} `json:"block,omitepty"`
+	} `json:"payments,omitempty"`
 	Addresses struct {
 		Bitcoin     string `json:"bitcoin,omitempty"`
 		Bitcoincash string `json:"bitcoincash,omitempty"`
