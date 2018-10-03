@@ -16,7 +16,8 @@ type APIEventData struct {
 
 type APIEvent struct {
 	father *AEvent
-	Data   APIEventData `json:"data,omitempty"`
+	Attempt_number int `json:"attempt_number,omitempty"`
+	Data   APIEventData `json:"event,omitempty"`
 	Errors []APIError   `json:"errors,omitempty"`
 }
 
