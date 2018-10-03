@@ -26,7 +26,7 @@ type APIChargeData struct {
 		Status  string     `json:"status,omitempty"`
 		Context string     `json:"context,omitempty"`
 	} `json:"timeline,omitempty"`
-	Metadata     map[string]interface{} `json:"metadata,omitempty"`
+	Metadata     map[string]string `json:"metadata,omitempty"`
 	Pricing_type string                 `json:"pricing_type,omitempty"`
 	Pricing      struct {
 		Local       Money `json:"local,omitempty"`
