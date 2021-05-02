@@ -86,24 +86,15 @@ func (a *APIClient) Fetch(method, path string, body interface{}, result interfac
 	}
 	if (resp.StatusCode >= 400){
 		response := struct {
-			error APIError
+			Error APIError `json:"error"`
 		}{}
-
-		bodyBytes, err := ioutil.ReadAll(resp.Body)
-		if err != nil {
-			fmt.Println(err)
-		}
-		bodyString := string(bodyBytes)
-		fmt.Println(bodyString)
 
 		err = json.NewDecoder(resp.Body).Decode(&response)
 		if err != nil {
 			return err
 		}
 
-		response.error.Message = bodyString
-
-		return &response.error
+		return &response.Error
 	}
 	err = json.NewDecoder(resp.Body).Decode(result)
 	if err != nil {
