@@ -83,7 +83,14 @@ func (a *APIClient) Fetch(method, path string, body interface{}, result interfac
 		return err
 	}
 	if (resp.StatusCode >= 400){
-		return &APIError{Code: resp.StatusCode}
+		var error APIError
+
+		err = json.NewDecoder(resp.Body).Decode(&error)
+		if err != nil {
+			return err
+		}
+
+		return &error
 	}
 	err = json.NewDecoder(resp.Body).Decode(result)
 	if err != nil {
