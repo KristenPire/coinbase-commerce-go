@@ -8,7 +8,8 @@ type AEvent struct {
 
 type APIEventData struct {
 	Id          string        `json:"id,omitempty"`
-	Resource    string        `json:"ressource,omitempty"`
+	Resource    string        `json:"resource,omitempty"`
+	Type        string        `json:"type,omitempty"`
 	Created_at  *time.Time    `json:"created_at,omitempty"`
 	Api_version string        `json:"api_version,omitempty"`
 	Data        APIChargeData `json:"data,omitempty"`
