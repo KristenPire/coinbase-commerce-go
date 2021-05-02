@@ -5,6 +5,8 @@ import (
 	"encoding/json"
 	"io"
 	"net/http"
+	"io/ioutil"
+	"fmt"
 )
 
 const (
@@ -87,10 +89,19 @@ func (a *APIClient) Fetch(method, path string, body interface{}, result interfac
 			error APIError
 		}{}
 
+		bodyBytes, err := ioutil.ReadAll(resp.Body)
+		if err != nil {
+			fmt.Println(err)
+		}
+		bodyString := string(bodyBytes)
+		fmt.Println(bodyString)
+
 		err = json.NewDecoder(resp.Body).Decode(&response)
 		if err != nil {
 			return err
 		}
+
+		response.error.Message = bodyString
 
 		return &response.error
 	}
