@@ -14,6 +14,7 @@ type APIChargeData struct {
 	Name         string     `json:"name,omitempty"`
 	Description  string     `json:"description,omitempty"`
 	Logo_url     string     `json:"logo_url,omitempty"`
+	Redirect_url string     `json:"redirect_url,omitempty"`
 	Hosted_url   string     `json:"Hosted_url,omitempty"`
 	Created_at   *time.Time `json:"created_at,omitempty"`
 	Updated_at   *time.Time `json:"updated_at,omitempty"`
