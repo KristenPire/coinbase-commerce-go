@@ -5,8 +5,6 @@ import (
 	"encoding/json"
 	"io"
 	"net/http"
-	"io/ioutil"
-	"fmt"
 )
 
 const (
