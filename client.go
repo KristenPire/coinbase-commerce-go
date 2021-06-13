@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"io"
 	"net/http"
+	"errors"
 )
 
 const (
@@ -83,7 +84,11 @@ func (a *APIClient) Fetch(method, path string, body interface{}, result interfac
 		return err
 	}
 	if (resp.StatusCode >= 400){
-		return string(resp.Body)
+	    bodyBytes, err := ioutil.ReadAll(resp.Body)
+	    if err != nil {
+		return err
+	    }
+		return errors.New(string(bodyBytes))
 	}
 	err = json.NewDecoder(resp.Body).Decode(result)
 	if err != nil {
