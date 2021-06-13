@@ -6,7 +6,7 @@ import (
 	"io"
 	"net/http"
 	"errors"
-	"ioutil"
+	"io/ioutil"
 )
 
 const (
