@@ -37,25 +37,25 @@ type APIChargeData struct {
 		Litecoin    Money `json:"litecoin,omitempty"`
 	} `json:"pricing,omitempty"`
 	Payments []struct {
-		Network string`json:"network,omitepty"`
-		Transaction_id string `json:"transaction_id,omitepty"`
-		Status string `json:"status,omitepty"`
+		Network string`json:"network,omitempty"`
+		Transaction_id string `json:"transaction_id,omitempty"`
+		Status string `json:"status,omitempty"`
 		Value struct {
 			Local struct {
-				Amount string `json:"amount,omitepty"`
-				Currency string `json:"currency,omitepty"`
+				Amount string `json:"amount,omitempty"`
+				Currency string `json:"currency,omitempty"`
 			}
 			Crypto struct {
-				Amount string `json:"amount,omitepty"`
-				Currency string `json:"currency,omitepty"`
-			}`json:"crypto,omitepty"`
-		} `json:"value,omitepty"`
+				Amount string `json:"amount,omitempty"`
+				Currency string `json:"currency,omitempty"`
+			}`json:"crypto,omitempty"`
+		} `json:"value,omitempty"`
 		Block struct {
-			Height int `json:"height,omitepty"`
-			Hash string `json:"hash,omitepty"`
-			Confirmations_accumulated int `json:"confirmations_accumulated ,omitepty"`
-			Confirmations_required int `json:"confirmations_required,omitepty"`
-		} `json:"block,omitepty"`
+			Height int `json:"height,omitempty"`
+			Hash string `json:"hash,omitempty"`
+			Confirmations_accumulated int `json:"confirmations_accumulated ,omitempty"`
+			Confirmations_required int `json:"confirmations_required,omitempty"`
+		} `json:"block,omitempty"`
 	} `json:"payments,omitempty"`
 	Addresses struct {
 		Bitcoin     string `json:"bitcoin,omitempty"`
